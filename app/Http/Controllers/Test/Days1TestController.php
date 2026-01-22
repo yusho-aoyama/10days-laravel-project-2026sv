@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Test;
 
-use Illuminate\Http\Request;
-// Add use line
+use App\Http\Controllers\Controller;
 use App\Models\User;
+
+// Add use line
 
 class Days1TestController extends Controller
 {

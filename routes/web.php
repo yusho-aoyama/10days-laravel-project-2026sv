@@ -7,4 +7,4 @@ Route::get('/', function () {
 });
 
 // Add a test route
-Route::get('/day1test', [App\Http\Controllers\Days1TestController::class, 'index']);
+Route::get('/day1test', [\App\Http\Controllers\Test\Days1TestController::class, 'index']);
