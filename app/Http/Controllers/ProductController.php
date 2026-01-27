@@ -7,9 +7,22 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+    // Add an index method
+    public function index(Request $request)
+    {
+        $category = $request->query('category');
+
+        if ($category) {
+            $products = Product::where('category', $category)->get();
+        } else {
+            $products = Product::all();
+        }
+        return response()->json($products);
+    }
+
     public function store(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
             //1, Validation
             $validated = $request->validate([
                 'name' => 'required',

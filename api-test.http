@@ -1,3 +1,4 @@
+### Create Electronics product
 POST http://127.0.0.1:8000/api/product
 Accept: application/json
 Content-Type: application/json
@@ -7,3 +8,28 @@ Content-Type: application/json
     "price": 100,
     "category": "Electronics"
 }
+
+###
+
+### Create Book product
+POST http://127.0.0.1:8000/api/product
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Laravel Book",
+    "price": 50,
+    "category": "book"
+}
+
+###
+
+### Get all products
+GET http://127.0.0.1:8000/api/products
+Accept: application/json
+
+###
+
+### Get products by category
+GET http://127.0.0.1:8000/api/products?category=book
+Accept: application/json
