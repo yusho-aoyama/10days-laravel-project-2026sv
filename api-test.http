@@ -33,3 +33,40 @@ Accept: application/json
 ### Get products by category
 GET http://127.0.0.1:8000/api/products?category=book
 Accept: application/json
+
+###
+
+### GET products by searching the name
+GET http://127.0.0.1:8000/api/products?search=book
+Accept: application/json
+
+###
+
+### Update product
+PUT http://127.0.0.1:8000/api/products/2
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Laravel T-shirts",
+    "price": 30,
+    "category": "clothes"
+}
+###
+
+### Update product
+PUT http://127.0.0.1:8000/api/products/3
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Updated Book",
+    "price": 60,
+    "category": "book"
+}
+###
+
+### DELETE product
+DELETE http://127.0.0.1:8000/api/products/2
+Accept: application/json
+###
