@@ -10,24 +10,32 @@ class ProductController extends Controller
     // Add an index method
     public function index(Request $request)
     {
-//        $category = $request->query('category');
-//
-//        if ($category) {
-//            $products = Product::where('category', $category)->get();
-//        } else {
-//            $products = Product::all();
-//        }
-//        return response()->json($products);
-
+        $category = $request->query('category');
         $search = $request->query('search');
-//        dd($search);
+
+        $query = Product::query();
+
+        // Filter by category
+        if ($category) {
+            $query->where('category', $category);
+        }
+
+        // Search by product name
         if ($search) {
-            $products = Product::where('name', 'like', '%' . $search . '%')->get();
-        } else {
-            $products = Product::all();
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $products = $query->get();
+
+        // Empty data handling (Day8)
+        if ($products->isEmpty()) {
+            return response()->json([
+                'message' => 'No Products found'
+            ], 404);
         }
 
         return response()->json($products);
+
     }
 
     public function store(Request $request)
@@ -51,39 +59,53 @@ class ProductController extends Controller
     // Add an Update method
     public function update(Request $request, $id)
     {
-        // 1, Find product
-        $product = Product::findOrFail($id);
+        // Add try-catch statement
+        try {
+            // 1, Find product
+            $product = Product::findOrFail($id);
 
-        // 2, Validation
-        $validated = $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'category' => 'required|string'
-        ]);
+            // 2, Validation
+            $validated = $request->validate([
+                'name' => 'required',
+                'price' => 'required|numeric',
+                'category' => 'required|string'
+            ]);
 
-        // 3, Update
-        $product->update($validated);
+            // 3, Update
+            $product->update($validated);
 
-        //4 Response
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'product' => $product
-        ]);
+            //4 Response
+            return response()->json([
+                'message' => 'Product updated successfully',
+                'product' => $product
+            ]);
 
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong',
+            ], 500);
+        }
     }
 
     // Add a delete method
     public function destroy($id)
     {
-        // 1, Find product
-        $product = Product::findOrFail($id);
+        // Add try-catch statement
+        try {
+            // 1, Find product
+            $product = Product::findOrFail($id);
 
-        // 2, Delete product
-        $product->delete();
+            // 2, Delete product
+            $product->delete();
 
-        // 3, Response
-        return response()->json([
-            'message' => 'Product deleted successfully'
-        ]);
+            // 3, Response
+            return response()->json([
+                'message' => 'Product deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong',
+            ], 500);
+        }
     }
 }
